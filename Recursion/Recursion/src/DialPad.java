@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// The main difference here is: instead of a binary tree this will have multiple branches based on the available character options. So we have to span the multiple branches using a loop.
+
 public class DialPad {
 
-    public static void combination(String phoneNumber){
-        Map<Character,String> dialMap = new HashMap<>();
+    public static void combination(String phoneNumber) {
+        Map<Character, String> dialMap = new HashMap<>();
         dialMap.put('0', "0");
         dialMap.put('1', "1");
         dialMap.put('2', "ABC");
@@ -24,34 +26,32 @@ public class DialPad {
         result.forEach(System.out::println);
     }
 
-    public static void dialPadCombination(String phoneNumber, Map<Character,String> dialMap, int index, List<String> result, char[] tempResult){
-       //edgecase
-       if(phoneNumber.length() <= 0){
-           return;
-       }
-       
-        //base condition
-       if(phoneNumber.length() == index){
-           result.add(Arrays.toString(tempResult));
-           return;
-       }
+    public static void dialPadCombination(String phoneNumber, Map<Character, String> dialMap, int index,
+            List<String> result, char[] tempResult) {
+        // edgecase
+        if (phoneNumber.length() <= 0) {
+            return;
+        }
 
-    String dialString =  dialMap.get(phoneNumber.charAt(index));
+        // base condition
+        if (phoneNumber.length() == index) {
+            result.add(Arrays.toString(tempResult));
+            return;
+        }
 
-  //   if(dialString != null){
-        char[] charSequence =  dialString.toCharArray();
-     for(int i=0; i< charSequence.length; i++){
-         tempResult[index] = charSequence[i];
-        dialPadCombination(phoneNumber, dialMap, index+1, result, tempResult);
-     }
-  //  }else{
-  //      tempResult[index] = phoneNumber.charAt(index);
-  //      dialPadCombination(phoneNumber, dialMap, index+1, result, tempResult);
-  //  }
-     
+        String dialString = dialMap.get(phoneNumber.charAt(index));
 
-       
+        // if(dialString != null){
+        char[] charSequence = dialString.toCharArray();
+        for (int i = 0; i < charSequence.length; i++) {
+            tempResult[index] = charSequence[i];
+            dialPadCombination(phoneNumber, dialMap, index + 1, result, tempResult);
+        }
+        // }else{
+        // tempResult[index] = phoneNumber.charAt(index);
+        // dialPadCombination(phoneNumber, dialMap, index+1, result, tempResult);
+        // }
+
     }
-    
-    
+
 }
